@@ -7,7 +7,7 @@ export default function Order({
   onClearItems,
 }) {
   const total = items
-    .reduce((acc, item) => acc + Number(item.price), 0)
+    .reduce((acc, item) => acc + Number(item.price) * item.quantity, 0)
     .toFixed(2);
   return (
     <div className="order-container">
@@ -22,6 +22,7 @@ export default function Order({
           {items.map((item) => (
             <div className="order-item" key={item.id}>
               <div>
+                <span className="quantity">{item.quantity}</span>
                 <span className="item-name">{item.name}</span>
               </div>
               <div>
@@ -53,7 +54,8 @@ export default function Order({
             <div className="checkout-section">
               <h3 className="section-title">Order Summary</h3>
               {items.map((item) => (
-                <p>
+                <p className="item-name">
+                  <span className="quantity">{item.quantity}</span>
                   {item.name} {item.price}
                 </p>
               ))}

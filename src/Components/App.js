@@ -56,7 +56,20 @@ export default function App() {
     setCheckOut(false);
   }
   function addItems(item) {
-    setMenu([...menu, item]);
+    // Check if item is already in the menu
+    const existingItem = menu.find((i) => i.id === item.id);
+
+    if (existingItem) {
+      // If item exists, update its quantity
+      setMenu(
+        menu.map((i) =>
+          i.id === item.id ? { ...i, quantity: (i.quantity || 1) + 1 } : i
+        )
+      );
+    } else {
+      // If item doesn't exist, add it with quantity 1
+      setMenu([...menu, { ...item, quantity: 1 }]);
+    }
   }
   function removeItems(itemId) {
     setMenu(menu.filter((item) => item.id !== itemId));
